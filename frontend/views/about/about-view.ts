@@ -11,6 +11,6 @@ export class AboutView extends LitElement {
   }
 
   render() {
-    return html`<div>Content placeholder</div>`;
+    return html`<div>Codemotion Restaurant</div>`;
   }
 }

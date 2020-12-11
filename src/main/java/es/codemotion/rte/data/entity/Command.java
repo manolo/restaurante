@@ -1,20 +1,26 @@
 package es.codemotion.rte.data.entity;
 
+import java.time.LocalTime;
+
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import es.codemotion.rte.data.AbstractEntity;
-import java.time.LocalDate;
-import javax.annotation.Nullable;
 
 @Entity
 public class Command extends AbstractEntity {
 
+    @Min(1) @Max(8)
     private Integer tableNumber;
+    @NotBlank
     private String type;
+    @NotBlank
     private String description;
+    @Min(1) @Max(12)
     private Integer quantity;
-    @Nullable
-    private LocalDate hour;
+    private LocalTime hour;
     private boolean served;
 
     public Integer getTableNumber() {
@@ -41,11 +47,11 @@ public class Command extends AbstractEntity {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-    public LocalDate getHour() {
+    public LocalTime getHour() {
         return hour;
     }
-    public void setHour(LocalDate hour) {
-        this.hour = hour;
+    public void setHour(LocalTime hour) {
+        this.hour = hour != null ? hour : LocalTime.now();
     }
     public boolean isServed() {
         return served;

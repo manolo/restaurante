@@ -13,6 +13,8 @@ import '@vaadin/vaadin-icons';
 import '@vaadin/vaadin-ordered-layout/vaadin-horizontal-layout';
 import '@vaadin/vaadin-split-layout/vaadin-split-layout';
 import '@vaadin/vaadin-text-field';
+import '@vaadin/vaadin-text-field/vaadin-integer-field';
+import '@vaadin/vaadin-combo-box';
 import '@vaadin/vaadin-upload';
 import { customElement, html, LitElement, property, query, unsafeCSS } from 'lit-element';
 import * as CommandEndpoint from '../../generated/CommandEndpoint';
@@ -63,21 +65,23 @@ export class OrdersView extends LitElement {
         <div id="editor-layout">
           <div id="editor">
             <vaadin-form-layout>
-              <vaadin-text-field label="Table number"
+              <vaadin-combo-box label="Table number"
+                .items="${[1,2,3,4,5,6,7,8]}"
                 ...="${field(this.binder.model.tableNumber)}">
-              </vaadin-text-field>
-              <vaadin-text-field label="Type"
+              </vaadin-combo-box>
+              <vaadin-combo-box label="Type"
+                .items="${['bebida', 'tapa', 'desayuno','comida','postre','racion']}"
                 ...="${field(this.binder.model.type)}">
-              </vaadin-text-field>
+              </vaadin-combo-box>
               <vaadin-text-field label="Description"
                 ...="${field(this.binder.model.description)}">
               </vaadin-text-field>
-              <vaadin-text-field label="Quantity"
+              <vaadin-integer-field label="Quantity" has-controls
                 ...="${field(this.binder.model.quantity)}">
-              </vaadin-text-field>
-              <vaadin-date-picker label="Hour"
+              </vaadin-integer-field>
+              <vaadin-text-field label="Hour" readonly
                 ...="${field(this.binder.model.hour)}">
-              </vaadin-date-picker>
+              </vaadin-text-field>
               <vaadin-checkbox
                 ...="${field(this.binder.model.served)}">
                 Served
