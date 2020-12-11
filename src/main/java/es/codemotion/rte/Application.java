@@ -17,8 +17,8 @@ import com.vaadin.flow.theme.lumo.Lumo;
  *
  */
 @SpringBootApplication
-@Theme(value = Lumo.class, variant = Lumo.DARK)
-@PWA(name = "Restaurante", shortName = "Restaurante")
+@Theme(themeClass = Lumo.class, variant = Lumo.DARK)
+@PWA(name = "Restaurante", shortName = "Restaurante", offlineResources = {"images/user.svg", "images/logo.png"})
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
     private static final long serialVersionUID = 1L;

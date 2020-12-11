@@ -2,6 +2,23 @@ import { Flow } from '@vaadin/flow-frontend/Flow';
 import { Router } from '@vaadin/router';
 import './global-styles';
 
+import client from './generated/connect-client.default';
+import { DeferredCallSubmitter } from '@vaadin/flow-frontend';
+import { OrdersView } from './views/orders/orders-view';
+
+client.deferredCallHandler = {
+  async handleDeferredCallSubmission(deferredCallSubmitter: DeferredCallSubmitter) {
+    try {
+      await deferredCallSubmitter.submit();
+      console.log('submission succeeded');
+      (document.querySelector('orders-view') as OrdersView).refreshGrid();
+    } catch (error) {
+      console.log('submission failed');
+      deferredCallSubmitter.keepDeferredCallInTheQueue();
+    }
+  }
+}
+
 const { serverSideRoutes } = new Flow({
   imports: () => import('../target/frontend/generated-flow-imports'),
 });

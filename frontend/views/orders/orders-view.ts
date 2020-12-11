@@ -122,15 +122,20 @@ export class OrdersView extends LitElement {
 
   private async save() {
     try {
-      await this.binder.submitTo(CommandEndpoint.update);
-
       if (!this.binder.value.id) {
         // We added a new item
         this.gridSize++;
       }
-      this.clearForm();
-      this.refreshGrid();
-      showNotification('Command details stored.', { position: 'bottom-start' });
+      const deferrableResult = await this.binder.submitTo(CommandEndpoint.update);
+      if (deferrableResult.isDeferred) {
+        showNotification('Command deferred.', { position: 'bottom-start' });
+
+      } else {
+        this.clearForm();
+        this.refreshGrid();
+        showNotification('Command stored.', { position: 'bottom-start' });
+      }
+
     } catch (error) {
       if (error instanceof EndpointError) {
         showNotification('Server error. ' + error.message, { position: 'bottom-start' });
@@ -148,7 +153,7 @@ export class OrdersView extends LitElement {
     this.binder.clear();
   }
 
-  private refreshGrid() {
+  public refreshGrid() {
     this.grid.selectedItems = [];
     this.grid.clearCache();
   }
