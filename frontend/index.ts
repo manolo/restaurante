@@ -6,18 +6,23 @@ import client from './generated/connect-client.default';
 import { DeferredCallSubmitter } from '@vaadin/flow-frontend';
 import { OrdersView } from './views/orders/orders-view';
 
+function refresh() {
+  (document.querySelector('orders-view') as OrdersView)?.refresh();
+}
+
 client.deferredCallHandler = {
   async handleDeferredCallSubmission(deferredCallSubmitter: DeferredCallSubmitter) {
     try {
       await deferredCallSubmitter.submit();
       console.log('submission succeeded');
-      (document.querySelector('orders-view') as OrdersView).refreshGrid();
+      refresh();
     } catch (error) {
       console.log('submission failed');
       deferredCallSubmitter.keepDeferredCallInTheQueue();
     }
   }
 }
+window.addEventListener('online', () => setTimeout(refresh, 200));
 
 const { serverSideRoutes } = new Flow({
   imports: () => import('../target/frontend/generated-flow-imports'),

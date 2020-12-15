@@ -97,15 +97,19 @@ export class OrdersView extends LitElement {
     `;
   }
 
+  private data!: Array<Command>;
+
   private async getGridData(params: GridDataProviderParams, callback: GridDataProviderCallback) {
-    const index = params.page * params.pageSize;
-    const data = await CommandEndpoint.list(index, params.pageSize, params.sortOrders as any);
-    callback(data);
+    if (navigator.onLine) {
+      const index = params.page * params.pageSize;
+      this.data = await CommandEndpoint.list(index, params.pageSize, params.sortOrders as any);
+    }
+    callback(this.data);
   }
 
   async connectedCallback() {
     super.connectedCallback();
-    this.gridSize = await CommandEndpoint.count();
+    this.refresh();
   }
 
   private async itemSelected(event: CustomEvent) {
@@ -113,8 +117,7 @@ export class OrdersView extends LitElement {
     this.grid.selectedItems = item ? [item] : [];
 
     if (item && item.id) {
-      const fromBackend = await CommandEndpoint.get(item.id);
-      fromBackend ? this.binder.read(fromBackend) : this.refreshGrid();
+      this.binder.value = item;
     } else {
       this.clearForm();
     }
@@ -124,12 +127,18 @@ export class OrdersView extends LitElement {
     try {
       if (!this.binder.value.id) {
         // We added a new item
-        this.gridSize++;
+        // this.gridSize++;
+        this.data.push(this.binder.value);
+      } else {
+        const i = this.data.findIndex(item => item.id == this.binder.value.id);
+        if (i >= 0) {
+          this.data[i]= this.binder.value;
+          this.grid.clearCache();
+        }
       }
       const deferrableResult = await this.binder.submitTo(CommandEndpoint.update);
       if (deferrableResult.isDeferred) {
         showNotification('Command deferred.', { position: 'bottom-start' });
-
       } else {
         this.clearForm();
         this.refreshGrid();
@@ -150,11 +159,22 @@ export class OrdersView extends LitElement {
   }
 
   private clearForm() {
-    this.binder.clear();
+    if (navigator.onLine) {
+      this.binder.clear();
+    }
   }
 
-  public refreshGrid() {
-    this.grid.selectedItems = [];
-    this.grid.clearCache();
+  private refreshGrid() {
+    if (this.grid) {
+      this.grid.selectedItems = [];
+      this.grid.clearCache();
+    }
+  }
+
+  public async refresh() {
+    this.refreshGrid();
+    if (navigator.onLine) {
+      this.gridSize = await CommandEndpoint.count();
+    }
   }
 }
