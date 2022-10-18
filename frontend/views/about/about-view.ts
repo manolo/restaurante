@@ -11,6 +11,9 @@ export class AboutView extends LitElement {
   }
 
   render() {
-    return html`<div>Codemotion Restaurant</div>`;
+    return html`
+      <H3>ACME Restaurant</h3>
+      <div>Alcalá de Henares</div>
+    `;
   }
 }
