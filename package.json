@@ -31,7 +31,7 @@
     "@vaadin/vaadin-login": "1.2.0",
     "@vaadin/vaadin-lumo-styles": "1.6.0",
     "@vaadin/vaadin-material-styles": "1.3.2",
-    "@vaadin/vaadin-menu-bar": "1.2.0",
+    "@vaadin/vaadin-menu-bar": "1.2.1",
     "@vaadin/vaadin-notification": "1.6.0",
     "@vaadin/vaadin-ordered-layout": "1.4.0",
     "@vaadin/vaadin-progress-bar": "1.3.0",
@@ -49,7 +49,9 @@
     "@vaadin/vaadin-avatar": "1.0.2",
     "cdigit": "2.5.6",
     "chance": "1.1.7",
-    "open": "^7.2.1"
+    "open": "^7.2.1",
+    "@vaadin/vaadin-core-shrinkwrap": "19.0.0-alpha1",
+    "@vaadin/vaadin-shrinkwrap": "19.0.0-alpha1"
   },
   "devDependencies": {
     "webpack": "4.42.0",
@@ -81,7 +83,8 @@
     "idb": "5.0.6",
     "workbox-core": "5.1.4",
     "workbox-precaching": "5.1.4",
-    "webpack-manifest-plugin": "2.2.0"
+    "webpack-manifest-plugin": "2.2.0",
+    "file-loader": "6.1.0"
   },
   "vaadin": {
     "dependencies": {
@@ -94,7 +97,7 @@
       "@vaadin/vaadin-split-layout": "4.3.0",
       "@vaadin/vaadin-combo-box": "5.4.7",
       "@vaadin/vaadin-cookie-consent": "1.2.0",
-      "@vaadin/vaadin-core-shrinkwrap": "18.0.2",
+      "@vaadin/vaadin-core-shrinkwrap": "19.0.0-alpha1",
       "@vaadin/vaadin-upload": "4.4.1",
       "@vaadin/vaadin-dialog": "2.5.2",
       "@vaadin/vaadin-select": "2.4.0",
@@ -105,13 +108,13 @@
       "@vaadin/vaadin-charts": "7.0.0",
       "@vaadin/vaadin-grid-pro": "2.3.0-alpha1",
       "@vaadin/vaadin-progress-bar": "1.3.0",
-      "@vaadin/vaadin-shrinkwrap": "18.0.2",
+      "@vaadin/vaadin-shrinkwrap": "19.0.0-alpha1",
       "@vaadin/vaadin-ordered-layout": "1.4.0",
       "@vaadin/vaadin-login": "1.2.0",
       "@vaadin/vaadin-button": "2.4.0",
       "@vaadin/vaadin-date-picker": "4.4.1",
       "@vaadin/vaadin-text-field": "2.8.2",
-      "@vaadin/vaadin-menu-bar": "1.2.0",
+      "@vaadin/vaadin-menu-bar": "1.2.1",
       "@vaadin/vaadin-form-layout": "2.3.0",
       "@vaadin/vaadin-accordion": "1.2.0",
       "@polymer/iron-list": "3.1.0",
@@ -165,8 +168,9 @@
       "idb": "5.0.6",
       "workbox-core": "5.1.4",
       "workbox-precaching": "5.1.4",
-      "webpack-manifest-plugin": "2.2.0"
+      "webpack-manifest-plugin": "2.2.0",
+      "file-loader": "6.1.0"
     },
-    "hash": "49e4f5ebb0dd486d9b4771afd6cdf2bb1e2da043ce7b0b44a6c0a1fcd7e60827"
+    "hash": "841c353b3eae5caad2520dfe8de8e628ab9d6881847251bba4a499297e8ea146"
   }
 }
