@@ -23,6 +23,19 @@ public class Command extends AbstractEntity {
     private LocalTime hour;
     private boolean served;
 
+    public Command() {
+    }
+
+    public Command(@Min(1) @Max(8) Integer tableNumber, @NotBlank String type, @NotBlank String description,
+            @Min(1) @Max(12) Integer quantity, LocalTime hour, boolean served) {
+        this.tableNumber = tableNumber;
+        this.type = type;
+        this.description = description;
+        this.quantity = quantity;
+        this.hour = hour;
+        this.served = served;
+    }
+
     public Integer getTableNumber() {
         return tableNumber;
     }
