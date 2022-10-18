@@ -11,9 +11,7 @@ export class AboutView extends LitElement {
   }
 
   render() {
-    return html`
-      <H3>ACME Restaurant</h3>
-      <div>Alcalá de Henares</div>
+    return html`<img width="90%" style="position:relative; left: 5%" src="images/carta.png">
     `;
   }
 }

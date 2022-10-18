@@ -19,8 +19,8 @@ export class MainView extends LitElement {
   @property({ type: Object }) location = router.location;
 
   @property({ type: Array }) menuTabs: MenuTab[] = [
-    { route: 'about', name: 'About' },
-    { route: '/', name: 'Orders' },
+    { route: 'carta', name: 'Carta' },
+    { route: '/', name: 'Comandas' },
   ];
 
   @property({ type: String }) projectName = '';
@@ -171,7 +171,7 @@ export class MainView extends LitElement {
     if (currentTab) {
       tabName = currentTab.name;
     } else {
-      tabName = 'Orders';
+      tabName = 'Comandas';
     }
     return tabName;
   }

@@ -38,7 +38,7 @@ const routes = [
     },
     children: [
       {
-        path: 'about',
+        path: 'carta',
         component: 'about-view',
         action: async () => {
           await import('./views/about/about-view');
