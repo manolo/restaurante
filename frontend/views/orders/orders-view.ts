@@ -91,6 +91,7 @@ export class OrdersView extends LitElement {
           <vaadin-horizontal-layout id="button-layout" theme="spacing">
             <vaadin-button theme="primary" @click="${this.save}">Save</vaadin-button>
             <vaadin-button theme="tertiary" @click="${this.cancel}">Cancel</vaadin-button>
+            <vaadin-button theme="tertiary error" @click="${this.delete}">Delete</vaadin-button>
           </vaadin-horizontal-layout>
         </div>
       </vaadin-split-layout>
@@ -115,7 +116,6 @@ export class OrdersView extends LitElement {
   private async itemSelected(event: CustomEvent) {
     const item: Command = event.detail.value as Command;
     this.grid.selectedItems = item ? [item] : [];
-
     if (item && item.id) {
       this.binder.value = item;
     } else {
@@ -127,8 +127,8 @@ export class OrdersView extends LitElement {
     try {
       if (!this.binder.value.id) {
         // We added a new item
-        // this.gridSize++;
         this.data.push(this.binder.value);
+        this.gridSize = this.data.length;
       } else {
         const i = this.data.findIndex(item => item.id == this.binder.value.id);
         if (i >= 0) {
@@ -137,15 +137,35 @@ export class OrdersView extends LitElement {
         }
       }
       const deferrableResult = await this.binder.submitTo(CommandEndpoint.update);
+      this.clearForm();
+      this.refreshGrid();
       if (deferrableResult.isDeferred) {
         showNotification('Command deferred.', { position: 'bottom-start' });
       } else {
-        this.clearForm();
-        this.refreshGrid();
         showNotification('Command stored.', { position: 'bottom-start' });
       }
+    } catch (error: any) {
+      if (error instanceof EndpointError) {
+        showNotification('Server error. ' + error.message, { position: 'bottom-start' });
+      } else {
+        throw error;
+      }
+    }
+  }
 
-    } catch (error) {
+  private async delete() {
+    try {
+      const item = this.grid.activeItem as Command;
+      if (item && item.served) {
+        this.data = this.data.filter(i => i !== this.grid.activeItem);
+        if (item.id) {
+          console.log(item.id);
+          await CommandEndpoint.delete(item.id);
+        }
+      }
+      this.clearForm();
+      this.refresh();
+    } catch (error:  any) {
       if (error instanceof EndpointError) {
         showNotification('Server error. ' + error.message, { position: 'bottom-start' });
       } else {
@@ -159,9 +179,7 @@ export class OrdersView extends LitElement {
   }
 
   private clearForm() {
-    if (navigator.onLine) {
-      this.binder.clear();
-    }
+    this.binder.clear();
   }
 
   private refreshGrid() {
