@@ -104,6 +104,13 @@ export class OrdersView extends LitElement {
     if (navigator.onLine) {
       const index = params.page * params.pageSize;
       this.data = await CommandEndpoint.list(index, params.pageSize, params.sortOrders as any);
+      window.localStorage.setItem("data", JSON.stringify(this.data));
+    } else {
+      const data = window.localStorage.getItem("data");
+      if (data) {
+        this.data = JSON.parse(data);
+        this.gridSize = this.data.length;
+      }
     }
     callback(this.data);
   }
